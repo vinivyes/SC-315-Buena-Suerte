@@ -1,0 +1,134 @@
+<div class="row d-flex justify-content-center">
+  <mat-card style="margin: 0px 25px;">
+    <div class="row d-flex justify-content-center">
+      <div class="row d-flex justify-content-center section" style="margin-top: 12px;">
+        Cantidad de Casas
+      </div>
+    </div>
+
+    <div class="row d-flex justify-content-center" style="margin-top: 12px;">
+      <input matInput [formControl]="casas" type="number" class="numero"/>
+    </div>
+    <div class="d-flex justify-content-center probabilidad">La probabilidad de ganar es de {{prob}}</div>
+  </mat-card>
+</div>
+<div class="row d-flex justify-content-center def-pad">
+  <div class="col-sm-6 justify-content-center def-pad">
+    <div class="title">Generación de Numeros</div>
+      <div class="row d-flex justify-content-center">
+        <mat-card style="margin: 5px 25px;">
+          <div class="col-12 justify-content-center">
+            <div class="row d-flex justify-content-center">
+              <div class="row d-flex justify-content-center section" style="margin-top: 12px;">
+                Terminando con:
+              </div>
+            </div>
+            <div class="row d-flex justify-content-center" style="margin-top: 12px;">
+              <input matInput numberonly [formControl]="termCombForm" class="numero"/>
+            </div>
+            <div class="combinaciones d-flex justify-content-center">La cantidad de combinaciones posibles es de {{term_comb}}</div>
+            <div class="row d-flex justify-content-center" style="margin-top: 12px;">
+              <button mat-raised-button [disabled]="!termCombForm.valid" [style.background-color]="!termCombForm.valid ? '#D6E3F2' : '#45698E'" style="color: white;" (click)="GenerarTerm()">Generar</button>
+            </div><div class="row d-flex justify-content-center">
+              <mat-card class="numgen mat-elevation-z8">{{term_num}}</mat-card>
+            </div>    
+          </div>
+        </mat-card>
+        <mat-card style="margin: 5px 25px;">
+          
+          <div class="col-12 justify-content-center">
+            <div class="row d-flex justify-content-center">
+              <div class="row d-flex justify-content-center section" style="margin-top: 12px;">
+                Empezando con:
+              </div>
+            </div>
+            <div class="row d-flex justify-content-center" style="margin-top: 12px;">
+              <input matInput [formControl]="empCombForm" class="numero"/>
+            </div>
+            <div class="combinaciones d-flex justify-content-center">La cantidad de combinaciones posibles es de {{emp_comb}}</div>
+            <div class="row d-flex justify-content-center" style="margin-top: 12px;">
+              <button mat-raised-button [disabled]="!empCombForm.valid" [style.background-color]="!empCombForm.valid ? '#D6E3F2' : '#45698E'" style="color: white;" (click)="GenerarEmp()">Generar</button>
+            </div>
+            <div class="row d-flex justify-content-center">
+              <mat-card class="numgen mat-elevation-z8">{{emp_num}}</mat-card>
+            </div>     
+          </div>
+        </mat-card>
+        <mat-card style="margin: 5px 25px;">
+          <div class="col-12 justify-content-center">      
+            <div class="row d-flex justify-content-center">
+              <div class="row d-flex justify-content-center section" style="margin-top: 12px;">
+                Incluyendo:
+              </div>
+            </div>
+            <div class="row d-flex justify-content-center" style="margin-top: 12px;">
+              <input matInput [formControl]="incCombForm" class="numero"/>
+            </div>
+            <div class="combinaciones d-flex justify-content-center">La cantidad de combinaciones posibles es de {{inc_comb}}</div>
+            <div class="row d-flex justify-content-center" style="margin-top: 12px;">
+              <button mat-raised-button [disabled]="!incCombForm.valid"[style.background-color]="!incCombForm.valid ? '#D6E3F2' : '#45698E'" style="color: white;" (click)="GenerarInc()">Generar</button>
+            </div>
+            <div class="row d-flex justify-content-center">
+              <mat-card class="numgen mat-elevation-z8">{{inc_num}}</mat-card>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+  </div>
+  <div class="col-sm-6 justify-content-center def-pad">
+    <div class="title">Loteria</div>   
+
+    <div class="row d-flex justify-content-center" style="margin-top: 12px;">
+      Numero a Jugar: <input matInput [formControl]="jugarCombForm" class="numero"/>
+    </div>
+    <div class="row d-flex justify-content-center" style="margin-top: 12px;">
+      <button mat-raised-button [disabled]="!jugarCombForm.valid"[style.background-color]="!jugarCombForm.valid ? '#D6E3F2' : '#45698E'" style="background-color: #45698E; color: white;" class="d-flex justify-self-center" (click)="JugarLoteria()">Jugar</button>
+    </div>
+  
+    <div class="col def-pad">
+      <div class="row d-flex justify-content-between section" style="margin-top: 12px;">
+        <div class="d-flex align-self-center">Juegos</div><button mat-raised-button style="background-color: #45698E; color: white;" class="d-flex justify-self-center" (click)="LimpiarLoteria()">Limpiar</button>
+      </div>
+      
+
+      <mat-card class="juegos d-flex justify-content-center">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+          <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+        
+          <!-- Position Column -->
+          <ng-container matColumnDef="fecha">
+            <th mat-header-cell *matHeaderCellDef style="width:200px"> Fecha </th>
+            <td mat-cell *matCellDef="let element" style="width:200px"> {{element.timestamp}} </td>
+          </ng-container>
+        
+          <!-- Name Column -->
+          <ng-container matColumnDef="numero">
+            <th mat-header-cell *matHeaderCellDef style="width:100px"> Su Numero </th>
+            <td mat-cell *matCellDef="let element" style="width:100px"> {{element.num}} </td>
+          </ng-container>
+        
+          <!-- Weight Column -->
+          <ng-container matColumnDef="loteria">
+            <th mat-header-cell *matHeaderCellDef style="width:100px"> Loteria </th>
+            <td mat-cell *matCellDef="let element" style="width:100px"> {{element.gen}} </td>
+          </ng-container>
+        
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="resultado" style="width:80px">
+            <th mat-header-cell *matHeaderCellDef style="width:80px">  </th>
+            <td mat-cell *matCellDef="let element"> 
+              <div class="ganador"  *ngIf="element.gano">Ganador!</div>
+              <div class="perdedor" *ngIf="!element.gano">Perdedor</div> </td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </mat-card>
+
+      
+    </div>
+  </div> 
+</div>
